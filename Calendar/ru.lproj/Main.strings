@@ -1,0 +1,30 @@
+
+/* Class = "UIButton"; configuration.title = "Обои"; ObjectID = "0Vy-K2-ldm"; */
+"0Vy-K2-ldm.configuration.title" = "Обои";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "0Vy-K2-ldm"; */
+"0Vy-K2-ldm.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Назад"; ObjectID = "CEi-KL-5Qh"; */
+"CEi-KL-5Qh.normalTitle" = "Назад";
+
+/* Class = "UIButton"; normalTitle = "Назад"; ObjectID = "Qa5-x7-Ln3"; */
+"Qa5-x7-Ln3.normalTitle" = "Назад";
+
+/* Class = "UILabel"; text = "Текст записи"; ObjectID = "YY1-IJ-lKX"; */
+"YY1-IJ-lKX.text" = "Текст записи";
+
+/* Class = "UIButton"; configuration.title = "Сохранить"; ObjectID = "a2G-0y-am7"; */
+"a2G-0y-am7.configuration.title" = "Сохранить";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "a2G-0y-am7"; */
+"a2G-0y-am7.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Добавить запись"; ObjectID = "h5c-LU-Gac"; */
+"h5c-LU-Gac.normalTitle" = "Добавить запись";
+
+/* Class = "UILabel"; text = "2022:10:12"; ObjectID = "mEj-5o-sHw"; */
+"mEj-5o-sHw.text" = "2022:10:12";
+
+/* Class = "UIButton"; normalTitle = "Настройки"; ObjectID = "vsu-1c-h6a"; */
+"vsu-1c-h6a.normalTitle" = "Настройки";
