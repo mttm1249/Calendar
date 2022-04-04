@@ -13,6 +13,8 @@ class NewEventViewController: UIViewController {
     var currentEvent: Event!
     var selectedDate: String?
     
+    let colors = OptionsViewController()
+    
     @IBOutlet weak var eventDateLabel: UILabel!
     @IBOutlet weak var eventTextView: UITextView!
     
@@ -25,6 +27,10 @@ class NewEventViewController: UIViewController {
         setupEditScreen()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = colors.userDefaults.colorForKey(key: "color11")
+    }
     private func setupEditScreen() {
         if currentEvent != nil {
             eventTextView.text = currentEvent.eventText

@@ -11,6 +11,7 @@
 		DA3F844E27F0417300C88A8C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F844D27F0417300C88A8C /* StorageManager.swift */; };
 		DA3F845027F0417B00C88A8C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F844F27F0417B00C88A8C /* Event.swift */; };
 		DA3F845227F0442A00C88A8C /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F845127F0442A00C88A8C /* NewEventViewController.swift */; };
+		DA409B2827F5FEC7001BFAAA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA409B2727F5FEC7001BFAAA /* Colors.swift */; };
 		DA6E5ECF27F0F731009C6DB8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E5ECE27F0F731009C6DB8 /* Extensions.swift */; };
 		DAAC0FB927F1951A00C0B870 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC0FB727F1951A00C0B870 /* CustomTableViewCell.swift */; };
 		DAAC0FBC27F1B56B00C0B870 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC0FBB27F1B56B00C0B870 /* OptionsViewController.swift */; };
@@ -28,6 +29,7 @@
 		DA3F844D27F0417300C88A8C /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DA3F844F27F0417B00C88A8C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA3F845127F0442A00C88A8C /* NewEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
+		DA409B2727F5FEC7001BFAAA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DA6E5ECE27F0F731009C6DB8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DAAC0FB727F1951A00C0B870 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		DAAC0FBB27F1B56B00C0B870 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				DA3F844F27F0417B00C88A8C /* Event.swift */,
 				DAC759A427F2D5E00004D0A6 /* Options.swift */,
+				DA409B2727F5FEC7001BFAAA /* Colors.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -174,6 +177,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					1,
+				);
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
@@ -262,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAF8D01627EF67B3002F9224 /* ViewController.swift in Sources */,
+				DA409B2827F5FEC7001BFAAA /* Colors.swift in Sources */,
 				DAAC0FBC27F1B56B00C0B870 /* OptionsViewController.swift in Sources */,
 				DA6E5ECF27F0F731009C6DB8 /* Extensions.swift in Sources */,
 				DAF8D01227EF67B3002F9224 /* AppDelegate.swift in Sources */,
@@ -437,7 +444,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mttm1249.calendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -473,7 +480,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = mttm1249.calendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
