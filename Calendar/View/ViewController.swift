@@ -53,13 +53,11 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
         
         popUpView.isHidden = true
         addEventButtonOutlet.isEnabled = false
-        
         tableView.dataSource = self
         tableView.delegate = self
         
         calendar.delegate = self
         calendar.dataSource = self
-        calendar.customizeCalenderAppearance()
         setupSearching()
     }
     
@@ -91,10 +89,7 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
         }
     }
     
-    func showPopUp() {
-        self.view.bringSubviewToFront(popUpView)
-        popUpView.isHidden = false
-        popUpTF.backgroundColor = .white
+    func animationPopUp() {
         popUpView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
         
         UIView.animate(withDuration: 0.7,
@@ -107,6 +102,13 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
         },
                        completion: { Void in()  }
         )
+    }
+    
+    func showPopUp() {
+        self.view.bringSubviewToFront(popUpView)
+        popUpView.isHidden = false
+        popUpTF.backgroundColor = .white
+        animationPopUp()
     }
     
     @IBAction func addEventButton(_ sender: Any) {
@@ -128,8 +130,19 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadData()
-        setUpWallpaper()
+        let options = OptionsViewController()
+        if ColorDefaults.active == false {
+            options.setDefaultsColors()
+            options.loadData()
+            customizeCalenderAppearance()
+            calendar.reloadData()
+        } else {
+            view.backgroundColor = options.userDefaults.colorForKey(key: "color11")
+            customizeCalenderAppearance()
+            calendar.reloadData()
+            loadData()
+            setUpWallpaper()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -243,7 +256,46 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     @IBAction func unwindSegueToMainScreen(segue: UIStoryboardSegue) {
         guard segue.identifier == "unwindSegue" else { return }
     }
+    
+
+    func customizeCalenderAppearance() {
+        let options = OptionsViewController()
+       
+        let color1 = options.userDefaults.colorForKey(key: "color1")
+        let color2 = options.userDefaults.colorForKey(key: "color2")
+        let color3 = options.userDefaults.colorForKey(key: "color3")
+        let color4 = options.userDefaults.colorForKey(key: "color4")
+        let color5 = options.userDefaults.colorForKey(key: "color5")
+        let color6 = options.userDefaults.colorForKey(key: "color6")
+        let color7 = options.userDefaults.colorForKey(key: "color7")
+        let color8 = options.userDefaults.colorForKey(key: "color8")
+        let color9 = options.userDefaults.colorForKey(key: "color9")
+        let color10 = options.userDefaults.colorForKey(key: "color10")
+
+        calendar.appearance.caseOptions           = [.headerUsesUpperCase]
+
+        calendar.appearance.weekdayFont           = .boldSystemFont(ofSize: 16)
+        calendar.appearance.titleFont             = .boldSystemFont(ofSize: 15)
+        calendar.appearance.calendar.firstWeekday =  2
+        calendar.appearance.headerTitleColor      =  color1
+        calendar.appearance.weekdayTextColor      =  color2
+        calendar.appearance.titleDefaultColor     =  color3
+        calendar.appearance.titlePlaceholderColor =  color4
+        calendar.appearance.eventDefaultColor     =  color5
+        calendar.appearance.todayColor            =  color6
+        calendar.appearance.selectionColor        =  color7
+        calendar.appearance.todaySelectionColor   =  color8
+        calendar.appearance.titleWeekendColor     =  color9
+        calendar.appearance.titleSelectionColor   =  color10
+    }
 }
+    
+    
+    
+    
+    
+    
+
 
 
 
