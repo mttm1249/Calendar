@@ -5,26 +5,28 @@
 //  Created by Денис on 27.03.2022.
 //
 
-import Foundation
 import UIKit
 import RealmSwift
 
+
 class OptionsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    
-    var currentColors: Colors!
-    
-    var test: Colors!
     
     var currentOptions: Options!
     var images: Results<Options>!
-    var colors: Results<Colors>!
     var imageIsChanged = false
-    let colorsData = realm.objects(Colors.self)
     
+    let userDefaults = UserDefaults()
+
     var red: CGFloat = 0
     var green: CGFloat = 0
     var blue: CGFloat = 0
+    
+    let colorKeys = ["color1", "color2","color3", "color4",
+                     "color5", "color6","color7", "color8",
+                     "color9", "color10", "color11"]
+    
+    var colorsForCells: [UIColor?] = []
+
     var colorPreviewValues: UIColor? {
         didSet {
             colorPreview.backgroundColor = colorPreviewValues
@@ -41,22 +43,19 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var greenSlider: UISlider!
     @IBOutlet weak var blueSlider: UISlider!
     
+    @IBOutlet weak var redValues: UILabel!
+    @IBOutlet weak var greenValues: UILabel!
+    @IBOutlet weak var blueValues: UILabel!
+
+    
+    
     @IBOutlet weak var colorCellCollection: UICollectionView!
-    
-    var colorStrings: [String?] = []
-    var currentString: String?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        colors = realm.objects(Colors.self)
-
-        
+        view.backgroundColor = userDefaults.colorForKey(key: "color11")
         colorCellCollection.delegate = self
         colorCellCollection.dataSource = self
-        
-        deleteButton.isHidden = true
         colorPickerView.isHidden = true
         setupOptionsScreen()
     }
@@ -72,17 +71,19 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBAction func redSliderAction(_ sender: Any) {
         red = CGFloat(redSlider.value)
+        redValues.text = String(format: "%.0f", red)
         changeColorPreview()
     }
     @IBAction func greenSliderAction(_ sender: Any) {
         green = CGFloat(greenSlider.value)
+        greenValues.text = String(format: "%.0f", green)
         changeColorPreview()
     }
     @IBAction func blueSliderAction(_ sender: Any) {
         blue = CGFloat(blueSlider.value)
+        blueValues.text = String(format: "%.0f", blue)
         changeColorPreview()
     }
-    
     
     func showColorPickerView() {
         view.bringSubviewToFront(colorPickerView)
@@ -94,118 +95,95 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         colorPickerView.isHidden = true
     }
     
-    
-    func stringToColor(color string: String) {
-        //        let result = string.components(separatedBy: " ")
-        //
-        //        let redString = result[1]
-        //        let greenString = result[2]
-        //        let blueString = result[3]
-        //
-        //        let red = Double(redString)! * 255
-        //        let green = Double(greenString)! * 255
-        //        let blue = Double(blueString)! * 255
-        
-        //        section1 = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-    }
-    
-    
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let colorsData = realm.objects(Colors.self)
-        for color in colorsData {
-            colorStrings = [color.headerTitleColor, color.weekdayTextColor, color.titleDefaultColor,
-                      color.titlePlaceholderColor, color.eventDefaultColor, color.todayColor,
-                      color.selectionColor, color.todaySelectionColor, color.titleWeekendColor,
-                      color.titleSelectionColor
-            ]
-        }
-        return colorStrings.count
+        return colorKeys.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = colorCellCollection.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
-        
-        cell.backgroundColor = .red
-        cell.layer.borderColor = UIColor.black.cgColor
+        let colors = colorsForCells[indexPath.row]
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor(red: 0.58831954, green: 0.6363219619, blue: 0.7316278815, alpha: 1).cgColor
+        cell.backgroundColor = colors
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-        return CGSize(width: 20, height: 20)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+//    {
+//        return CGSize(width: 40, height: 20)
+//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = colorStrings[indexPath.row]
-
-        currentString = cell
-        
         showColorPickerView()
+    }
+    
+    func setDefaultsColors() {
+        ColorDefaults.active = true
         
-        print("CURRENT CELL: \(cell!)")
+        userDefaults.setColor(color: #colorLiteral(red: 0.2549019608, green: 0.2745098039, blue: 0.3019607843, alpha: 1),
+                              forKey: "color1")
+        userDefaults.setColor(color: #colorLiteral(red: 0.4406057274, green: 0.4770534495, blue: 0.5300029363, alpha: 1),
+                              forKey: "color2")
+        userDefaults.setColor(color: #colorLiteral(red: 0.2549019608, green: 0.2745098039, blue: 0.3019607843, alpha: 1),
+                              forKey: "color3")
+        userDefaults.setColor(color: #colorLiteral(red: 0.4406057274, green: 0.4770534495, blue: 0.5300029363, alpha: 1),
+                              forKey: "color4")
+        userDefaults.setColor(color: #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1),
+                              forKey: "color5")
+        userDefaults.setColor(color: #colorLiteral(red: 0.7139339004, green: 0.3407340069, blue: 0.9686274529, alpha: 1),
+                              forKey: "color6")
+        userDefaults.setColor(color: #colorLiteral(red: 0.4406057274, green: 0.4770534495, blue: 0.5300029363, alpha: 1),
+                              forKey: "color7")
+        userDefaults.setColor(color: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),
+                              forKey: "color8")
+        userDefaults.setColor(color: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1),
+                              forKey: "color9")
+        userDefaults.setColor(color: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
+                              forKey: "color10")
+        
+        userDefaults.setColor(color: #colorLiteral(red: 0.4860396981, green: 0.5505498052, blue: 0.666649878, alpha: 1),
+                              forKey: "color11")
     }
     
-    let colorString = "HELLO"
-    
-    func saveColorsData() {
-        let newColors = Colors(headerTitleColor: colorString,
-                               weekdayTextColor: colorString,
-                               titleDefaultColor: colorString,
-                               titlePlaceholderColor: colorString,
-                               eventDefaultColor: colorString,
-                               todayColor: colorString,
-                               selectionColor: colorString,
-                               todaySelectionColor: colorString,
-                               titleWeekendColor: colorString,
-                               titleSelectionColor: colorString)
-        if currentColors != nil {
-            try! realm.write {
-                currentColors.headerTitleColor = colorString
-                currentColors.weekdayTextColor = colorString
-                currentColors.titleDefaultColor = colorString
-                
-                currentColors.titlePlaceholderColor = colorString
-                currentColors.eventDefaultColor = colorString
-                currentColors.todayColor = colorString
-                
-                currentColors.selectionColor = colorString
-                currentColors.todaySelectionColor = colorString
-                currentColors.titleWeekendColor = colorString
-                currentColors.titleSelectionColor = colorString
-            }
-        } else {
-            StorageManager.saveColors(newColors)
-        }
+    func loadData() {
+        let color1  = userDefaults.colorForKey(key: "color1")
+        let color2  = userDefaults.colorForKey(key: "color2")
+        let color3  = userDefaults.colorForKey(key: "color3")
+        let color4  = userDefaults.colorForKey(key: "color4")
+        let color5  = userDefaults.colorForKey(key: "color5")
+        let color6  = userDefaults.colorForKey(key: "color6")
+        let color7  = userDefaults.colorForKey(key: "color7")
+        let color8  = userDefaults.colorForKey(key: "color8")
+        let color9  = userDefaults.colorForKey(key: "color9")
+        let color10 = userDefaults.colorForKey(key: "color10")
+        let color11 = userDefaults.colorForKey(key: "color11")
+
+        let colorsArray = [color1, color2, color3, color4, color5,
+                           color6, color7, color8, color9, color10, color11]
+        
+        colorsForCells = colorsArray
     }
-    
-    
-    // todo
-    
     
     @IBAction func savePopUp(_ sender: Any) {
         
         guard let indexPath = colorCellCollection?.indexPathsForSelectedItems?.first else {return}
+        
+        let currentCellKey = colorKeys[indexPath.row]
+        
+        guard colorPreviewValues != nil else { return }
+        
+        // Saving to UD
+        
+        userDefaults.setColor(color: colorPreviewValues, forKey: currentCellKey)
 
-        let current = colorStrings[indexPath.row]
+        // end saving
         
-        print("CURRENT: \(current!)")
-
-        print("INDEXPATH: \(indexPath)")
-        
-        realm.beginWrite()
-
-        
-
-        try! realm.commitWrite()
-        
-//        print("CURRENT: \(currentCell)")
-        
-        print("цвет из слайдеров \(colorPreviewValues!)")
+        view.backgroundColor = userDefaults.colorForKey(key: "color11")
+        loadData()
+        colorCellCollection.reloadData()
+        colorPickerView.isHidden = true
     }
-    
     
     @IBAction func changeBgImageButton(_ sender: Any) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -238,21 +216,30 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     
-    
     @IBAction func saveOptionsButton(_ sender: UIButton) {
         saveChanges()
-        //        dismiss(animated: true)
-    }
-    
-    
-    
-    @IBAction func deleteOptionsButton(_ sender: Any) {
-        setDefaultImage()
-        deleteOptions()
+        loadData()
         dismiss(animated: true)
     }
     
-    
+
+    @IBAction func deleteOptionsButton(_ sender: Any) {
+        let alertController = UIAlertController(title: "Внимание!", message: "Удалить все настройки?", preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "Да", style: .destructive) { action in
+            
+            self.setDefaultImage()
+            self.setDefaultsColors()
+            self.deleteOptions()
+            self.dismiss(animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "НЕТ!", style: .default) { _ in }
+        
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
     
     func deleteOptions() {
         guard currentOptions != nil else { return }
@@ -260,7 +247,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         let image = images.first
         StorageManager.deleteOptions(image!)
     }
-    
     
     
     func setDefaultImage() {
@@ -272,7 +258,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         StorageManager.saveOptions(newOptions)
     }
-    
     
     
     func saveChanges() {
@@ -287,11 +272,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         } else {
             StorageManager.saveOptions(newOptions)
         }
-    }
-    
-    
-    func loadData() {
-        
     }
     
     private func setupOptionsScreen() {
