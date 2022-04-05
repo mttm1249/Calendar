@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4BC1411C01AD20BC4FE8617B /* Pods_Calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87689D7286E355BDAE358BB8 /* Pods_Calendar.framework */; };
+		DA1B454927FCCC4100C8DC91 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1B454827FCCC4100C8DC91 /* CustomCollectionViewCell.swift */; };
 		DA3F844E27F0417300C88A8C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F844D27F0417300C88A8C /* StorageManager.swift */; };
 		DA3F845027F0417B00C88A8C /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F844F27F0417B00C88A8C /* Event.swift */; };
 		DA3F845227F0442A00C88A8C /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3F845127F0442A00C88A8C /* NewEventViewController.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		87689D7286E355BDAE358BB8 /* Pods_Calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C234C5337949CB502F4A0D0B /* Pods-wefwefw.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wefwefw.release.xcconfig"; path = "Target Support Files/Pods-wefwefw/Pods-wefwefw.release.xcconfig"; sourceTree = "<group>"; };
+		DA1B454827FCCC4100C8DC91 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		DA3F844D27F0417300C88A8C /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		DA3F844F27F0417B00C88A8C /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DA3F845127F0442A00C88A8C /* NewEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				DA3F845127F0442A00C88A8C /* NewEventViewController.swift */,
 				DAAC0FBB27F1B56B00C0B870 /* OptionsViewController.swift */,
 				DAAC0FB727F1951A00C0B870 /* CustomTableViewCell.swift */,
+				DA1B454827FCCC4100C8DC91 /* CustomCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				DA3F845227F0442A00C88A8C /* NewEventViewController.swift in Sources */,
 				DA3F845027F0417B00C88A8C /* Event.swift in Sources */,
 				DA3F844E27F0417300C88A8C /* StorageManager.swift in Sources */,
+				DA1B454927FCCC4100C8DC91 /* CustomCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,7 +448,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.21;
 				PRODUCT_BUNDLE_IDENTIFIER = mttm1249.calendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -480,7 +484,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 2.21;
 				PRODUCT_BUNDLE_IDENTIFIER = mttm1249.calendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

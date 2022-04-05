@@ -25,6 +25,10 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
                      "color5", "color6","color7", "color8",
                      "color9", "color10", "color11"]
     
+    let cellNames = ["Название месяца", "Названия дней недели","Дни выбранного месяца", "Дни следующего месяца",
+                     "Цвет индикатора", "Сегодняшний день", "Выбранный день", "Выбран сегодняшний день",
+                     "Выходные дни", "Цвет выбранной даты", "Цвет фона"]
+    
     var colorsForCells: [UIColor?] = []
 
     var colorPreviewValues: UIColor? {
@@ -100,8 +104,11 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = colorCellCollection.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
+        let cell = colorCellCollection.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) as! CustomCollectionViewCell
         let colors = colorsForCells[indexPath.row]
+        let cellNames = cellNames[indexPath.row]
+        
+        cell.cellLabel.text = cellNames
         cell.layer.borderWidth = 1
         cell.layer.borderColor = UIColor(red: 0.58831954, green: 0.6363219619, blue: 0.7316278815, alpha: 1).cgColor
         cell.backgroundColor = colors
@@ -109,10 +116,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
-//    {
-//        return CGSize(width: 40, height: 20)
-//    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showColorPickerView()
