@@ -10,23 +10,13 @@ import RealmSwift
 
 class OptionsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var currentOptions: Options!
-    var images: Results<Options>!
-    var imageIsChanged = false
+    let colorDefaults = ColorDefaults()
     let userDefaults = UserDefaults()
-
+    
     var red: CGFloat = 0
     var green: CGFloat = 0
     var blue: CGFloat = 0
-    
-    let colorKeys = ["color1", "color2","color3", "color4",
-                     "color5", "color6","color7", "color8",
-                     "color9", "color10", "color11"]
-    
-    let cellNames = ["Название месяца", "Названия дней недели","Дни выбранного месяца", "Дни следующего месяца",
-                     "Цвет индикатора", "Сегодняшний день", "Выбранный день", "Выбран сегодняшний день",
-                     "Выходные дни", "Цвет выбранной даты", "Цвет фона"]
-    
+        
     var colorsForCells: [UIColor?] = []
     var colorPreviewValues: UIColor? {
         didSet {
@@ -52,14 +42,14 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         colorCellCollection.delegate = self
         colorCellCollection.dataSource = self
         colorPickerView.isHidden = true
-        setupOptionsScreen()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadData()
+        bgImage.loadImage()
     }
-    
+      
     func changeColorPreview() {
         colorPreviewValues = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
     }
@@ -93,13 +83,13 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colorKeys.count
+        return colorDefaults.colorKeys.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = colorCellCollection.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) as! CustomCollectionViewCell
         let colors = colorsForCells[indexPath.row]
-        let cellNames = cellNames[indexPath.row]
+        let cellNames = colorDefaults.cellNames[indexPath.row]
         
         cell.cellLabel.text = cellNames
         cell.layer.borderWidth = 1
@@ -114,7 +104,7 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func setDefaultsColors() {
-        ColorDefaults.active = true
+        colorDefaults.activeDefaultColors = true
         
         userDefaults.setColor(color: #colorLiteral(red: 0.2549019608, green: 0.2745098039, blue: 0.3019607843, alpha: 1),
                               forKey: "color1")
@@ -163,7 +153,7 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBAction func savePopUp(_ sender: Any) {
 
         guard let indexPath = colorCellCollection?.indexPathsForSelectedItems?.first else {return}
-        let currentCellKey = colorKeys[indexPath.row]
+        let currentCellKey = colorDefaults.colorKeys[indexPath.row]
         guard colorPreviewValues != nil else { return }
         
         userDefaults.setColor(color: colorPreviewValues, forKey: currentCellKey)
@@ -186,6 +176,7 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         actionSheet.addAction(camera)
         actionSheet.addAction(photo)
         actionSheet.addAction(cancel)
+        
         present(actionSheet, animated: true)
     }
     
@@ -205,7 +196,7 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     @IBAction func saveOptionsButton(_ sender: UIButton) {
-        saveChanges()
+        bgImage.saveImage()
         loadData()
         dismiss(animated: true)
     }
@@ -213,10 +204,10 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBAction func deleteOptionsButton(_ sender: Any) {
         let alertController = UIAlertController(title: "Внимание!", message: "Удалить все настройки?", preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "Да", style: .destructive) { action in
-            
-            self.setDefaultImage()
             self.setDefaultsColors()
-            self.deleteOptions()
+            self.bgImage.image = nil
+            self.userDefaults.removeObject(forKey: "image")
+            
             self.dismiss(animated: true)
         }
         
@@ -227,46 +218,5 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         present(alertController, animated: true, completion: nil)
     }
-    
-    func deleteOptions() {
-        guard currentOptions != nil else { return }
-        images = realm.objects(Options.self)
-        let image = images.first
-        StorageManager.deleteOptions(image!)
-    }
-    
-    func setDefaultImage() {
-        let image =  #imageLiteral(resourceName: "defaultBg")
-        let imageData = image.pngData()
-        let newOptions = Options(imageData: imageData)
-        try! realm.write {
-            currentOptions?.imageData = newOptions.imageData
-        }
-        StorageManager.saveOptions(newOptions)
-    }
-    
-    func saveChanges() {
-        let image = imageIsChanged ? bgImage.image : #imageLiteral(resourceName: "defaultBg")
-        let imageData = image?.pngData()
-        let newOptions = Options(imageData: imageData)
-        
-        if currentOptions != nil {
-            try! realm.write {
-                currentOptions?.imageData = newOptions.imageData
-            }
-        } else {
-            StorageManager.saveOptions(newOptions)
-        }
-    }
-    
-    private func setupOptionsScreen() {
-        if currentOptions != nil {
-            imageIsChanged = true
-            guard let data = currentOptions?.imageData, let image = UIImage(data: data) else { return }
-            bgImage.image = image
-            bgImage.contentMode = .scaleAspectFill
-            
-            deleteButton.isHidden = false
-        }
-    }
+ 
 }

@@ -23,16 +23,16 @@ class StorageManager {
         }
     }
     
-    static func saveOptions(_ options: Options) {
-        try! realm.write {
-            realm.add(options)
-        }
-    }
-    
-    static func deleteOptions(_ options: Options) {
-        try! realm.write {
-            realm.delete(options)
-        }
-    }
+//    static func saveOptions(_ options: Options) {
+//        try! realm.write {
+//            realm.add(options)
+//        }
+//    }
+//    
+//    static func deleteOptions(_ options: Options) {
+//        try! realm.write {
+//            realm.delete(options)
+//        }
+//    }
     
 }

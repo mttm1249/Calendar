@@ -38,9 +38,7 @@ extension OptionsViewController: UIImagePickerControllerDelegate, UINavigationCo
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         bgImage.image = info[.editedImage] as? UIImage
-        bgImage.contentMode = .scaleAspectFill
         bgImage.clipsToBounds = true
-        imageIsChanged = true
         dismiss(animated: true)
     }
 }
@@ -88,4 +86,20 @@ extension UserDefaults {
     }
     set(colorData, forKey: key)
   }
+}
+
+extension UIImageView {
+    func saveImage(){
+        guard let image = self.image, let data = image.jpegData (compressionQuality: 1.0) else { return }
+      let encoded = try! PropertyListEncoder().encode (data)
+      UserDefaults.standard.set(encoded, forKey: "image")
+    }
+    
+    func loadImage() {
+        guard let data = UserDefaults.standard.data(forKey: "image") else { return }
+        let decoded = try! PropertyListDecoder().decode(Data.self, from: data)
+        let image = UIImage(data: decoded)
+        self.image = image
+    }
+    
 }

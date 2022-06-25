@@ -18,7 +18,6 @@
 		DA6E5ECF27F0F731009C6DB8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6E5ECE27F0F731009C6DB8 /* Extensions.swift */; };
 		DAAC0FB927F1951A00C0B870 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC0FB727F1951A00C0B870 /* CustomTableViewCell.swift */; };
 		DAAC0FBC27F1B56B00C0B870 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAC0FBB27F1B56B00C0B870 /* OptionsViewController.swift */; };
-		DAC759A527F2D5E00004D0A6 /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC759A427F2D5E00004D0A6 /* Options.swift */; };
 		DACAB6DC2861BF5B00F8E0CA /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACAB6DB2861BF5B00F8E0CA /* Notifications.swift */; };
 		DAEED5782866F2450084463F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DAEED5772866F2450084463F /* .gitignore */; };
 		DAF8D01227EF67B3002F9224 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF8D01127EF67B3002F9224 /* AppDelegate.swift */; };
@@ -68,7 +67,6 @@
 		DA6E5ECE27F0F731009C6DB8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DAAC0FB727F1951A00C0B870 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		DAAC0FBB27F1B56B00C0B870 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
-		DAC759A427F2D5E00004D0A6 /* Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
 		DAC759A827F2F83D0004D0A6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAC759A927F2F83F0004D0A6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DACAB6DB2861BF5B00F8E0CA /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
@@ -145,6 +143,7 @@
 		DAB1223D27F4607A00121035 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				DAF8D01127EF67B3002F9224 /* AppDelegate.swift */,
 				DAF8D01527EF67B3002F9224 /* MainViewController.swift */,
 				DA3F845127F0442A00C88A8C /* NewEventViewController.swift */,
 				DAAC0FBB27F1B56B00C0B870 /* OptionsViewController.swift */,
@@ -156,7 +155,6 @@
 			isa = PBXGroup;
 			children = (
 				DA3F844F27F0417B00C88A8C /* Event.swift */,
-				DAC759A427F2D5E00004D0A6 /* Options.swift */,
 				DA409B2727F5FEC7001BFAAA /* Colors.swift */,
 			);
 			path = Model;
@@ -172,14 +170,13 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		DAB1224027F4614700121035 /* Support Files */ = {
+		DAB1224027F4614700121035 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DAF8D01127EF67B3002F9224 /* AppDelegate.swift */,
 				DAF8D01A27EF67B4002F9224 /* Assets.xcassets */,
 				DAF8D01F27EF67B4002F9224 /* Info.plist */,
 			);
-			path = "Support Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		DAF8D00527EF67B3002F9224 = {
@@ -211,7 +208,7 @@
 				DA29022E2867233B00EBD581 /* View */,
 				DAB1223D27F4607A00121035 /* Controller */,
 				DAB1223F27F4611F00121035 /* Helpers */,
-				DAB1224027F4614700121035 /* Support Files */,
+				DAB1224027F4614700121035 /* Supporting Files */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -380,7 +377,6 @@
 				DAAC0FBC27F1B56B00C0B870 /* OptionsViewController.swift in Sources */,
 				DA6E5ECF27F0F731009C6DB8 /* Extensions.swift in Sources */,
 				DAF8D01227EF67B3002F9224 /* AppDelegate.swift in Sources */,
-				DAC759A527F2D5E00004D0A6 /* Options.swift in Sources */,
 				DAAC0FB927F1951A00C0B870 /* CustomTableViewCell.swift in Sources */,
 				DA3F845227F0442A00C88A8C /* NewEventViewController.swift in Sources */,
 				DA3F845027F0417B00C88A8C /* Event.swift in Sources */,
@@ -604,7 +600,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KG89CXC5J4;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Calendar/Support Files/Info.plist";
+				INFOPLIST_FILE = "Calendar/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Calendar;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Calendar хочет воспользоваться Вашей камерой";
@@ -641,7 +637,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KG89CXC5J4;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Calendar/Support Files/Info.plist";
+				INFOPLIST_FILE = "Calendar/Supporting Files/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Calendar;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Calendar хочет воспользоваться Вашей камерой";

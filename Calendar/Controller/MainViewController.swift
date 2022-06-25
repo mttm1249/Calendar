@@ -11,6 +11,8 @@ import FSCalendar
 
 class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource, UITableViewDelegate, UITableViewDataSource {
         
+    let colorDefaults = ColorDefaults()
+
     let searchController = UISearchController(searchResultsController: nil)
     var selectedDate: String! {
         didSet {
@@ -33,15 +35,6 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     var eventText: String?
     var eventNotificationInfo: String?
     
-    var bgImage: Results<Options>!
-    var backgroundImageData: Data?
-    var wallpaper: UIImage? {
-        didSet {
-            wallpaperView.contentMode = .scaleAspectFill
-            wallpaperView.image = wallpaper
-        }
-    }
-    
     @IBOutlet var calendar: FSCalendar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addEventButtonOutlet: UIButton!
@@ -53,7 +46,6 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bgImage = realm.objects(Options.self)
         events = realm.objects(Event.self)
         
         navigationItem.title = "Сегодня: \(dateFormatter.string(from: currentDate))"
@@ -67,25 +59,35 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
         setupSearching()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if UserDefaults.standard.data(forKey: "image") != nil {
+            wallpaperView.loadImage()
+        } else {
+            wallpaperView.image = nil
+        }
+        
+        let options = OptionsViewController()
+        if colorDefaults.activeDefaultColors == false {
+            options.setDefaultsColors()
+            options.loadData()
+            colorDefaults.customizeAppearanceFor(calendar: calendar)
+            calendar.reloadData()
+        } else {
+            view.backgroundColor = options.userDefaults.colorForKey(key: "color11")
+            colorDefaults.customizeAppearanceFor(calendar: calendar)
+            calendar.reloadData()
+            loadData()
+        }
+    }
+    
     func setupSearching() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.text = ""
     }
-    
-    func setUpWallpaper() {
-        if backgroundImageData != nil {
-            wallpaper = UIImage(data: backgroundImageData!)
-        }
-    }
-    
-    func loadData() {
-        let imageData = realm.objects(Options.self)
-        for image in imageData {
-            let data = image.imageData
-            backgroundImageData = data
-        }
         
+    func loadData() {
         let dateData = realm.objects(Event.self)
         for event in dateData {
             let date = event.date
@@ -133,24 +135,7 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
         popUpView.isHidden = true
         performSegue(withIdentifier: "editEvent", sender: nil)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        let options = OptionsViewController()
-        if ColorDefaults.active == false {
-            options.setDefaultsColors()
-            options.loadData()
-            customizeCalenderAppearance()
-            calendar.reloadData()
-        } else {
-            view.backgroundColor = options.userDefaults.colorForKey(key: "color11")
-            customizeCalenderAppearance()
-            calendar.reloadData()
-            loadData()
-            setUpWallpaper()
-        }
-    }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editEvent" {
             let newEventVC = segue.destination as! NewEventViewController
@@ -160,13 +145,6 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let event = isFiltering ? filteredEvents[indexPath.row] : events[indexPath.row]
             newEventVC.currentEvent = event
-        }
-        
-        if segue.identifier == "options" {
-            let optionsVC = segue.destination as! OptionsViewController
-            
-            let options = bgImage
-            optionsVC.currentOptions = options?.first
         }
     }
     
@@ -267,46 +245,5 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     @IBAction func unwindSegueToMainScreen(segue: UIStoryboardSegue) {
         guard segue.identifier == "unwindSegue" else { return }
     }
-    
 
-    func customizeCalenderAppearance() {
-        let options = OptionsViewController()
-       
-        let color1 = options.userDefaults.colorForKey(key: "color1")
-        let color2 = options.userDefaults.colorForKey(key: "color2")
-        let color3 = options.userDefaults.colorForKey(key: "color3")
-        let color4 = options.userDefaults.colorForKey(key: "color4")
-        let color5 = options.userDefaults.colorForKey(key: "color5")
-        let color6 = options.userDefaults.colorForKey(key: "color6")
-        let color7 = options.userDefaults.colorForKey(key: "color7")
-        let color8 = options.userDefaults.colorForKey(key: "color8")
-        let color9 = options.userDefaults.colorForKey(key: "color9")
-        let color10 = options.userDefaults.colorForKey(key: "color10")
-
-        calendar.appearance.caseOptions           = [.headerUsesUpperCase]
-
-        calendar.appearance.weekdayFont           = .boldSystemFont(ofSize: 16)
-        calendar.appearance.titleFont             = .boldSystemFont(ofSize: 15)
-        calendar.appearance.calendar.firstWeekday =  2
-        calendar.appearance.headerTitleColor      =  color1
-        calendar.appearance.weekdayTextColor      =  color2
-        calendar.appearance.titleDefaultColor     =  color3
-        calendar.appearance.titlePlaceholderColor =  color4
-        calendar.appearance.eventDefaultColor     =  color5
-        calendar.appearance.todayColor            =  color6
-        calendar.appearance.selectionColor        =  color7
-        calendar.appearance.todaySelectionColor   =  color8
-        calendar.appearance.titleWeekendColor     =  color9
-        calendar.appearance.titleSelectionColor   =  color10
-    }
 }
-    
-    
-    
-    
-    
-    
-
-
-
-
