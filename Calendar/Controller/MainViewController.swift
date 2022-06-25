@@ -1,16 +1,16 @@
 //
-//  ViewController.swift
-//  wefwefw
+//  MainViewController.swift
+//  Calendar
 //
 //  Created by Денис on 27.03.2022.
 //
 
-import FSCalendar
 import UIKit
 import RealmSwift
+import FSCalendar
 
-class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource, UITableViewDelegate, UITableViewDataSource {
-    
+class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource, UITableViewDelegate, UITableViewDataSource {
+        
     let searchController = UISearchController(searchResultsController: nil)
     var selectedDate: String! {
         didSet {
@@ -19,15 +19,19 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     }
     var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "d MMM, EEEE, yyyy"
+        
+        
         return formatter
     }()
     var isFiltering = true
     
+    var currentDate = Date()
     var events: Results<Event>!
     var filteredEvents: Results<Event>!
     var datesWithEvent: [String] = []
     var eventText: String?
+    var eventNotificationInfo: String?
     
     var bgImage: Results<Options>!
     var backgroundImageData: Data?
@@ -44,6 +48,7 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     @IBOutlet weak var optionsButtonOutlet: UIButton!
     @IBOutlet weak var popUpView: UIView!
     @IBOutlet weak var popUpTF: UITextView!
+    @IBOutlet weak var notificationInfoLabel: UILabel!
     @IBOutlet weak var wallpaperView: UIImageView!
     
     override func viewDidLoad() {
@@ -51,6 +56,7 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
         bgImage = realm.objects(Options.self)
         events = realm.objects(Event.self)
         
+        navigationItem.title = "Сегодня: \(dateFormatter.string(from: currentDate))"
         popUpView.isHidden = true
         addEventButtonOutlet.isEnabled = false
         tableView.dataSource = self
@@ -197,7 +203,9 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let event = filteredEvents[indexPath.row]
         eventText = event.eventText
+        eventNotificationInfo = event.notificationDate
         popUpTF.text = eventText
+        notificationInfoLabel.text = eventNotificationInfo
         showPopUp()
     }
     
@@ -223,8 +231,11 @@ class ViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource
             let event = self.filteredEvents[indexPath.row]
             
             eventText = event.eventText
+            eventNotificationInfo = event.notificationDate
+
             popUpTF.text = eventText
-            
+            notificationInfoLabel.text = eventNotificationInfo
+
             realm.beginWrite()
             if event.isDone {
                 event.isDone = false

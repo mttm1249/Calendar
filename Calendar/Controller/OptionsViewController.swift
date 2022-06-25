@@ -1,6 +1,6 @@
 //
 //  OptionsViewController.swift
-//  wefwefw
+//  Calendar
 //
 //  Created by Денис on 27.03.2022.
 //
@@ -8,13 +8,11 @@
 import UIKit
 import RealmSwift
 
-
 class OptionsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var currentOptions: Options!
     var images: Results<Options>!
     var imageIsChanged = false
-    
     let userDefaults = UserDefaults()
 
     var red: CGFloat = 0
@@ -30,7 +28,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
                      "Выходные дни", "Цвет выбранной даты", "Цвет фона"]
     
     var colorsForCells: [UIColor?] = []
-
     var colorPreviewValues: UIColor? {
         didSet {
             colorPreview.backgroundColor = colorPreviewValues
@@ -39,20 +36,14 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var deleteButton: UIButton!
-    
     @IBOutlet weak var colorPickerView: UIView!
     @IBOutlet weak var colorPreview: UIView!
-    
     @IBOutlet weak var redSlider: UISlider!
     @IBOutlet weak var greenSlider: UISlider!
     @IBOutlet weak var blueSlider: UISlider!
-    
     @IBOutlet weak var redValues: UILabel!
     @IBOutlet weak var greenValues: UILabel!
     @IBOutlet weak var blueValues: UILabel!
-
-    
-    
     @IBOutlet weak var colorCellCollection: UICollectionView!
     
     override func viewDidLoad() {
@@ -78,11 +69,13 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         redValues.text = String(format: "%.0f", red)
         changeColorPreview()
     }
+    
     @IBAction func greenSliderAction(_ sender: Any) {
         green = CGFloat(greenSlider.value)
         greenValues.text = String(format: "%.0f", green)
         changeColorPreview()
     }
+    
     @IBAction func blueSliderAction(_ sender: Any) {
         blue = CGFloat(blueSlider.value)
         blueValues.text = String(format: "%.0f", blue)
@@ -115,7 +108,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         return cell
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showColorPickerView()
@@ -169,18 +161,12 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     @IBAction func savePopUp(_ sender: Any) {
-        
+
         guard let indexPath = colorCellCollection?.indexPathsForSelectedItems?.first else {return}
-        
         let currentCellKey = colorKeys[indexPath.row]
-        
         guard colorPreviewValues != nil else { return }
         
-        // Saving to UD
-        
         userDefaults.setColor(color: colorPreviewValues, forKey: currentCellKey)
-
-        // end saving
         
         view.backgroundColor = userDefaults.colorForKey(key: "color11")
         loadData()
@@ -218,14 +204,12 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         )
     }
     
-    
     @IBAction func saveOptionsButton(_ sender: UIButton) {
         saveChanges()
         loadData()
         dismiss(animated: true)
     }
     
-
     @IBAction func deleteOptionsButton(_ sender: Any) {
         let alertController = UIAlertController(title: "Внимание!", message: "Удалить все настройки?", preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "Да", style: .destructive) { action in
@@ -251,7 +235,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         StorageManager.deleteOptions(image!)
     }
     
-    
     func setDefaultImage() {
         let image =  #imageLiteral(resourceName: "defaultBg")
         let imageData = image.pngData()
@@ -261,7 +244,6 @@ class OptionsViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         StorageManager.saveOptions(newOptions)
     }
-    
     
     func saveChanges() {
         let image = imageIsChanged ? bgImage.image : #imageLiteral(resourceName: "defaultBg")
