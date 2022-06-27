@@ -115,6 +115,7 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     func showPopUp() {
         self.view.bringSubviewToFront(popUpView)
         popUpView.isHidden = false
+        popUpView.applyShadow(shadowRadius: 10)
         popUpTF.backgroundColor = .white
         animationPopUp()
     }
@@ -240,6 +241,10 @@ class MainViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
             datesWithEvent = dates
             calendar.reloadData()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 40
     }
     
     @IBAction func unwindSegueToMainScreen(segue: UIStoryboardSegue) {

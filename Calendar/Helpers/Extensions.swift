@@ -101,5 +101,16 @@ extension UIImageView {
         let image = UIImage(data: decoded)
         self.image = image
     }
-    
+}
+
+// MARK: - Working with shadows
+extension UIView {
+    func applyShadow(shadowRadius: CGFloat) {
+        layer.cornerRadius = shadowRadius
+        layer.masksToBounds = false
+        layer.shadowRadius = 10.0
+        layer.shadowOpacity = 0.30
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+    }
 }

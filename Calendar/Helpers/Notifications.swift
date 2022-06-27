@@ -65,7 +65,3 @@ class Notifications: UNNotificationServiceExtension, UNUserNotificationCenterDel
     }
         
 }
-
-
-
-
